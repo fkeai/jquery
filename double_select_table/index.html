@@ -5,31 +5,73 @@
 <title>产品选择页面</title>
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <script src="js/jquery-1.11.1.min.js"></script>
-
 </head>
 <body>
-
 <div class="selection-container">
-	<div class="select-box left">
+<div class="select-box left">
 		<div class="select-box-title">
 			<span>已绑定的产品</span>
 		</div>
 		<div class="search">
 			<ul>
 				<li class="title">产品名称</li>
-				<li class="input"><input style="width:100px"></li>
+				<li class="input"><input name="attr1" style="width:95px"></li>
 				<li class="title">融资对象</li>
-				<li class="input"><input style="width:100px"></li>
+				<li class="input"><input name="attr2" style="width:95px"></li>
 				<li class="title">其他要素</li>
-				<li class="input"><input style="width:100px"></li>
+				<li class="input"><input name="attr3" style="width:95px"></li>
 			</ul>
 			<ul>
 				<li class="title">产品名称</li>
-				<li class="input"><input style="width:100px"></li>
+				<li class="input"><input name="attr4" style="width:95px"></li>
 				<li class="title">融资对象</li>
-				<li class="input"><input style="width:100px"></li>
+				<li class="input"><input name="attr5" style="width:95px"></li>
+				<li class="title"></li>
+				<li class="input"><button style="width:80px" type="button" searchType="selected">查询</button>
+			</ul>
+		</div>
+		<div class="head">
+			<ul>
+				<li style="width:32px">
+				    <input type="checkbox" class="checkbox-all" id="checkbox-all-selected" />
+					<label for="checkbox-all-selected"></label>
+				</li>
+				<li>产品名称</li>
+				<li>融资对象</li>
+				<li>融资类型</li>
+				<li>其他要素</li>
+			</ul>
+		</div>
+		<div class="body select-content">
+			<ul class="selected-ul"></ul>
+		</div>
+	</div>
+	<div class="arrows-box">
+		<div class="arrow-btns">
+			<button class="arrow-btn right">&#8250;</button>
+			<button class="arrow-btn left">&#8249;</button>
+		</div>
+	</div>
+		<div class="select-box right">
+		<div class="select-box-title">
+			<span>未绑定的产品</span>
+		</div>
+		<div class="search unselect">
+			<ul>
+				<li class="title">产品名称</li>
+				<li class="input"><input name="attr1" style="width:95px"></li>
+				<li class="title">融资对象</li>
+				<li class="input"><input name="attr2" style="width:95px"></li>
 				<li class="title">其他要素</li>
-				<li class="input"><input style="width:100px"></li>
+				<li class="input"><input name="attr3" style="width:95px"></li>
+			</ul>
+			<ul>
+				<li class="title">产品名称</li>
+				<li class="input"><input name="attr4" style="width:95px"></li>
+				<li class="title">融资对象</li>
+				<li class="input"><input name="attr5" style="width:95px"></li>
+				<li class="title"></li>
+				<li class="input"><button style="width:80px" type="button" searchType="unselect">查询</button>
 			</ul>
 		</div>
 		<div class="head">
@@ -48,147 +90,11 @@
 			<ul class="unselect-ul"></ul>
 		</div>
 	</div>
-	<div class="arrows-box">
-		<div class="arrow-btns">
-			<button class="arrow-btn right">&#8250;</button>
-			<button class="arrow-btn left">&#8249;</button>
-		</div>
-	</div>
-	<div class="select-box right">
-		<div class="select-box-title">
-			<span>未绑定的产品</span>
-		</div>
-		<div class="search">
-			<ul>
-				<li class="title">产品名称</li>
-				<li class="input"><input style="width:100px"></li>
-				<li class="title">融资对象</li>
-				<li class="input"><input style="width:100px"></li>
-				<li class="title">其他要素</li>
-				<li class="input"><input style="width:100px"></li>
-			</ul>
-			<ul>
-				<li class="title">产品名称</li>
-				<li class="input"><input style="width:100px"></li>
-				<li class="title">融资对象</li>
-				<li class="input"><input style="width:100px"></li>
-				<li class="title">其他要素</li>
-				<li class="input"><input style="width:100px"></li>
-			</ul>
-		</div>
-		<div class="head">
-			<ul>
-				<li style="width:32px">
-				    <input type="checkbox" class="checkbox-all" id="checkbox-all-selected" />
-					<label for="checkbox-all-selected"></label>
-				</li>
-				<li>产品名称</li>
-				<li>融资对象</li>
-				<li>融资类型</li>
-				<li>其他要素</li>
-			</ul>
-		</div>
-		<div class="body select-content">
-			<ul class="selected-ul">
-				<!--<li class="sample" style="display:none;">
-					<span style="width:30px"><input type="checkbox"/><label></label></span>
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>-->
-				</li>
-			</ul>
-		</div>
-	</div>
+<input id="unitType" value="<%=request.getParameter("unitType")%>"/>
+<input id="unitId" value="<%=request.getParameter("unitId")%>"/>	
 </div>
-<script>
-	$(document).ready(function(){
-		/**$.ajax(function(){
-			
-		});**/
-		// 未选择
-		var checkbox_index = 1;  // checbox的索引，每个要唯一
-		var unselectList = new Array();
-		for(var i=0; i<10; i++) {
-			var data = {
-				"attr1" : "产品"+i,
-				"attr2" : "融资对象"+i,
-				"attr3" : "融资类型"+i,
-				"attr4" : "其他要素"+i,
-			};
-			unselectList.push(data);
-		}
-		var sample = $(".unselect-ul").find(".sample");
-		
-		$.each(unselectList, function(i, data){
-			var cur_index = "tyue-checkbox-blue" + checkbox_index;
-			var checkbox = $("<input type='checkbox' class='checkboxs'>").attr("id", cur_index);
-			var label = $("<label>").attr("for",cur_index);
-			var checkCol = $("<span>").width("30px").append(checkbox).append(label);
-			var newRow = $("<li>").append(checkCol);
-			
-			/**$.each(data, function(n, col){
-				var span = $("<span>").text(col);
-				newRow.append(span);
-			});**/
-			newRow.append($("<span>").text(data.attr1));
-			newRow.append($("<span>").text(data.attr2));
-			newRow.append($("<span>").text(data.attr3));
-			newRow.append($("<span>").text(data.attr4));
-			
-			$(".unselect-ul").append(newRow);
-			//alert(data.attr1);
-		});
-		
-		
-		// 已选择
-		var selectedList = new Array();
-		for(var i=0; i<10; i++) {
-			var data = {
-				"attr1" : "产品"+i,
-				"attr2" : "融资对象"+i,
-				"attr3" : "融资类型"+i,
-				"attr4" : "其他要素"+i,
-			};
-			selectedList.push(data);
-		}
-		var sample = $(".selected-ul").find(".sample");
-		
-		$.each(selectedList, function(i, data){
-			/**var that = $(this);
-			var newRow = sample.clone().removeClass("sample").show();
-			var tdArr = newRow.find("span");
-			checkbox_index ++;
-			$(tdArr[0]).find("input").attr("id", "tyue-checkbox-blue" + checkbox_index).addClass("checkboxs");
-			$(tdArr[0]).find("label").attr("for", "tyue-checkbox-blue" + checkbox_index);
-			$(tdArr[1]).text(data.attr1);
-			$(tdArr[2]).text(data.attr2);
-			$(tdArr[3]).text(data.attr3);
-			$(tdArr[4]).text(data.attr4);**/
-			
-			var cur_index = "tyue-checkbox-blue" + checkbox_index;
-			var checkbox = $("<input type='checkbox' class='checkboxs'>").attr("id", cur_index);
-			var label = $("<label>").attr("for",cur_index);
-			var checkCol = $("<span>").width("30px").append(checkbox).append(label);
-			var newRow = $("<li>").append(checkCol);
-			
-			/**$.each(data, function(n, col){
-				var span = $("<span>").text(col);
-				newRow.append(span);
-			});**/
-			newRow.append($("<span>").text(data.attr1));
-			newRow.append($("<span>").text(data.attr2));
-			newRow.append($("<span>").text(data.attr3));
-			newRow.append($("<span>").text(data.attr4));
 
-			$(".selected-ul").append(newRow);
-			//alert(data.attr1);
-		});
-	});
-</script>
-
-<!--穿梭框方法-->
+<!--双向选择js-->
 <script src="js/index.js"></script>
-
 </body>
 </html>
