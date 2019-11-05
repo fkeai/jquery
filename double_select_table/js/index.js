@@ -86,8 +86,11 @@ $(function(){
 			target = $('.unselect-ul');
 		}
 		checkboxs = origin.find('.checkboxs');
+		var idArray = new Array();
 		for(var i=0; i<checkboxs.length; i++){					
 			if($(checkboxs[i]).prop('checked')){
+				var id=$(checkboxs[i]).attr("id");
+				idArray.push(id);
 				var that = $(checkboxs[i]).parent().parent().clone();
 				that.children('input').prop('checked',false);
 				target.append(that);
@@ -96,10 +99,15 @@ $(function(){
 				num++;
 			}
 		}
+				
 		if(checkboxs.length == num){
 			alert('未选中任何一项');
 		}else{
 			origin.parent().prev().find('.checkbox-all').prop('checked',false);
+			
+			var ids = idArray.join(",");
+			var operType = $(this).hasClass('left') ? "selected" : "unselect";
+			save(ids, operType);
 		}
 		changeBtnStatus();
 	});
@@ -145,16 +153,19 @@ $(function(){
 		// 已绑定
 		var selectedList = new Array();
 		for(var i=11; i<20; i++) {
+			var id = guid();
 			var data = {
-				"attr1" : "产品"+guid(),
+				"id"    : id,
+				"attr1" : "产品"+id,
 				"attr2" : "融资对象",
 				"attr3" : "融资类型",
 				"attr4" : "其他要素"
 			};
 			selectedList.push(data);
 		}
-		
-		//unselectList = getData("selected", params);			
+		var url = $("#querySelectedURL").val();
+		url += "?unitType="+$("#unitType").val()+"&unitId="+$("#unitId").val();
+		//unselectList = getData(url, params);			
 		generateList("selected-ul", selectedList);
 	}
 	
@@ -163,23 +174,48 @@ $(function(){
 		// 未绑定
 		var unselectList = new Array();
 		for(var i=11; i<20; i++) {
+			var id = guid();
 			var data = {
-				"attr1" : "产品"+guid(),
+				"id"    : id,
+				"attr1" : "产品"+id,
 				"attr2" : "融资对象",
 				"attr3" : "融资类型",
 				"attr4" : "其他要素"
 			};
 			unselectList.push(data);
 		}
-
-		//unselectList = getData("unselect", params);
+		var url = $("#queryUnelectURL").val();
+		url += "?unitType="+$("#unitType").val()+"&unitId="+$("#unitId").val();
+		//unselectList = getData(url, params);
 		generateList("unselect-ul", unselectList);
 	}
 	
-	/**请求后台数据 listType 列表类型，params查询参数json对象**/
-	function getData(listType, params) {
+		
+	function save(ids, operType){
+		log("ids="+ids+",operType="+operType);
+		var url = "";
+		if("selected" === operType) {
+			url = $("#addURL").val();
+		} else {
+			url = $("#delURL").val();
+		}
+		url += "?productAppIds="+ids+"&unitPoolType="+$("#unitType").val()+"&unitId="+$("#unitId").val();
+		log(url);
+		$.ajax({
+			url:url,
+			//params:params,
+			success:function(data){
+				dataList = JSON.parse(data);
+			},
+			error:function() {
+				alert("加载数据出错，请重试！");
+			}
+		});
+	}
+	
+	/**请求后台数据 url 请求url，params查询参数json对象**/
+	function getData(url, params) {
 		var dataList = new Array();
-		var url = "&listType="+listType+"&unitType="+$("#unitType").val()+"&unitId="+$("#unitId").val();
 		log(url);
 		$.ajax({
 			url:url,
@@ -203,7 +239,7 @@ $(function(){
 	/**追加内容，listClass 容器class，dataList 数据列表**/
 	function appendRow(listClass, dataList) {
 		$.each(dataList, function(i, data){
-			var cur_index = "tyue-checkbox-blue" + guid();
+			var cur_index = data.id;
 			var checkbox = $("<input type='checkbox' class='checkboxs'>").attr("id", cur_index);
 			var label = $("<label>").attr("for",cur_index);
 			var checkCol = $("<span>").css({"width":"30px"}).append(checkbox).append(label);

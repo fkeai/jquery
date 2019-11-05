@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="selection-container">
-<div class="select-box left">
+	<div class="select-box left">
 		<div class="select-box-title">
 			<span>已绑定的产品</span>
 		</div>
@@ -48,8 +48,8 @@
 	</div>
 	<div class="arrows-box">
 		<div class="arrow-btns">
-			<button class="arrow-btn right">&#8250;</button>
-			<button class="arrow-btn left">&#8249;</button>
+			<button class="arrow-btn right" type="button"  title="将左侧选中的产品移到右侧并保存">&#8250;</button>
+			<button class="arrow-btn left" type="button" title="将右侧选中的产品移到左侧并保存" >&#8249;</button>
 		</div>
 	</div>
 		<div class="select-box right">
@@ -90,9 +90,13 @@
 			<ul class="unselect-ul"></ul>
 		</div>
 	</div>
+</div>
+<input id="querySelectedURL" value="<%=request.getContextPath() %>/productBasicDetailVAction.do?method=listJsonBound"/>
+<input id="queryUnelectURL" value="<%=request.getContextPath() %>/productBasicDetailVAction.do?method=listJsonUnbound"/>
+<input id="addURL" value="<%=request.getContextPath() %>/productUnitPoolApp.do?method=createPool"/>
+<input id="delURL" value="<%=request.getContextPath() %>/productUnitPoolApp.do?method=deletePool"/>
 <input id="unitType" value="<%=request.getParameter("unitType")%>"/>
 <input id="unitId" value="<%=request.getParameter("unitId")%>"/>	
-</div>
 
 <!--双向选择js-->
 <script src="js/index.js"></script>
