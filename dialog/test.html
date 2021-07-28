@@ -1,0 +1,59 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    
+    <script src="./jquery-1.11.1.js"></script>
+    <script src="./dialog.js"></script>
+</head>
+<body>
+<div id="updateDiv" class="display_none">
+  <input id="alert" type="button" value="Alert" />  
+  <input id="confirm" type="button" value="Confirm" /> 
+  <input id="open" type="button" value="Open" />   
+  <input id="alertAndOpen" type="button" value="Alert后关闭Open" />  
+</div>
+</body>
+</html>
+<script type="text/javascript">   
+
+    //重写alert
+	window.alert = function(msg){
+		$.dialog.alert("提示", msg, null);  	
+
+	}
+
+    $("#alert").bind("click", function () { 
+		alert('客户编号必填1');  
+    });     
+     
+    $("#confirm").bind("click", function () {   
+        $.dialog.confirm(null, '确认要删除吗？',function(r){  
+           //...点确定之后执行的内容  
+           window.location.href="http://www.baidu.com"  
+        });  	
+    });  
+    $("#open").bind("click", function () { 
+		var url = "http://www.baidu.com";
+		$.dialog.open({title:"xxxx", url:url, height: '530px', width: '700px'});
+		
+		//alert('客户编号必填1');  
+		//alert('客户编号必填2'); 
+        $.dialog.open({title:"test", url:url, height: '430px', width: '500px'});
+		$.dialog.open({title:"aa", url:url, height: '330px', width: '300px'});	
+		$.dialog.open({title:"aa", url:url, height: '230px', width: '200px'});	
+
+		setTimeout(function(){
+			$.dialog.close();
+		}, 1500);
+    }); 
+	
+	$("#alertAndOpen").bind("click", function () { 
+	    var url = "http://www.baidu.com";
+		$.dialog.open({title:"test", url:url, height: '430px', width: '500px'});
+		$.dialog.alert("提示标题", "提示内容", function(){
+			$.dialog.close();
+		}); 
+	});
+   
+ 
+  </script>
