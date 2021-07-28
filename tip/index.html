@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="js/jquery-1.11.1.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/jquery.webui-popover.css">
+
+</head>
+<body>
+<div style="height:100px;"></div>
+
+<a href="#" >第一行</a>
+<div class="myContent">
+    <p>第一行 popover content</p>
+</div>
+<a href="#" >第二行</a>
+<div class="myContent">
+    <p>第二行 popover content</p>
+</div>
+
+<div id="addPop" class="btn btn-default"> add Pop</div>
+<div class="pops" id="newPOP"></div>
+
+<script src="js/jquery.webui-popover.js"></script>
+<script>
+$(document).ready(function(){
+
+	//$('#id').webuiPopover({content:'Content',trigger:'hover',animation:'pop'});
+
+	/**$('a').webuiPopover({
+		url:'.myContent',
+		trigger:'hover',
+		animation:'pop',
+		onShow: function($element) {
+			alert($element.html());
+		}
+	});**/
+
+	$('a').webuiPopover({
+		title:"title",
+		type:'iframe',//值有:'html','iframe','async'
+		url:'https://www.taobao.com/',
+		trigger : 'hover',
+		animation : 'pop'
+	});
+							
+	
+
+});
+</script>
+
+</body>
+</html>
