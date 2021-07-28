@@ -7,6 +7,7 @@
 <script src="js/jquery-1.11.1.min.js"></script>
 </head>
 <body>
+<body>
 <div class="selection-container">
 	<div class="select-box left">
 		<div class="select-box-title">
@@ -14,32 +15,34 @@
 		</div>
 		<div class="search">
 			<ul>
-				<li class="title">产品名称</li>
-				<li class="input"><input name="attr1" style="width:95px"></li>
-				<li class="title">融资对象</li>
-				<li class="input"><input name="attr2" style="width:95px"></li>
-				<li class="title">其他要素</li>
-				<li class="input"><input name="attr3" style="width:95px"></li>
+				<li class="frist title" style="width:70px">产品名称</li>
+				<li class="input" style="width:125px"><input name="productName" style="width:120px"></li>
+				<li class="title" style="width:70px">产品编码</li>
+				<li class="input" style="width:125px"><input name="productCode" style="width:120px"></li>
+
 			</ul>
 			<ul>
-				<li class="title">产品名称</li>
-				<li class="input"><input name="attr4" style="width:95px"></li>
-				<li class="title">融资对象</li>
-				<li class="input"><input name="attr5" style="width:95px"></li>
-				<li class="title"></li>
-				<li class="input"><button style="width:80px" type="button" searchType="selected">查询</button>
+				<li class="frist title" style="width:70px">产品类型</li>
+				<li class="input" style="width:125px"><input name="productType" style="width:120px"></li>
+				<li class="title" style="width:70px">产品大类</li>
+				<li class="input" style="width:125px"><input name="largeClassName" style="width:120px"></li>
+				<li class="input" style="width:50px">
+				<button style="width:50px" type="button" searchType="selected">
+						<span class="btnSpan btnSpanImg"> <span class="btnSpanFont">查询</span></span>
+				</button>
+				</li>
 			</ul>
 		</div>
 		<div class="head">
 			<ul>
-				<li style="width:32px">
+				<li class="frist" style="width:32px">
 				    <input type="checkbox" class="checkbox-all" id="checkbox-all-selected" />
-					<label for="checkbox-all-selected"></label>
+				<!-- 	<label for="checkbox-all-selected"></label> -->
 				</li>
 				<li>产品名称</li>
-				<li>融资对象</li>
-				<li>融资类型</li>
-				<li>其他要素</li>
+				<li>产品编码</li>
+				<li>产品类型</li>
+				<li>产品大类</li>
 			</ul>
 		</div>
 		<div class="body select-content">
@@ -48,55 +51,47 @@
 	</div>
 	<div class="arrows-box">
 		<div class="arrow-btns">
-			<button class="arrow-btn right" type="button"  title="将左侧选中的产品移到右侧并保存">&#8250;</button>
-			<button class="arrow-btn left" type="button" title="将右侧选中的产品移到左侧并保存" >&#8249;</button>
+			<button class="arrow-btn right"  id="rightBtn" type="button"  title="将左侧选中的产品移到右侧并保存">&#8250;</button>
+			<button class="arrow-btn left"  id="leftBtn" type="button" title="将右侧选中的产品移到左侧并保存" >&#8249;</button>
 		</div>
 	</div>
-		<div class="select-box right">
+	<div class="select-box right">
 		<div class="select-box-title">
 			<span>未绑定的产品</span>
 		</div>
-		<div class="search unselect">
+				<div class="search">
 			<ul>
-				<li class="title">产品名称</li>
-				<li class="input"><input name="attr1" style="width:95px"></li>
-				<li class="title">融资对象</li>
-				<li class="input"><input name="attr2" style="width:95px"></li>
-				<li class="title">其他要素</li>
-				<li class="input"><input name="attr3" style="width:95px"></li>
+				<li class="frist title" style="width:70px">产品名称</li>
+				<li class="input" style="width:125px"><input name="productName" style="width:120px"></li>
+				<li class="title" style="width:70px">产品编码</li>
+				<li class="input" style="width:125px"><input name="productCode" style="width:120px"></li>
+
 			</ul>
 			<ul>
-				<li class="title">产品名称</li>
-				<li class="input"><input name="attr4" style="width:95px"></li>
-				<li class="title">融资对象</li>
-				<li class="input"><input name="attr5" style="width:95px"></li>
-				<li class="title"></li>
-				<li class="input"><button style="width:80px" type="button" searchType="unselect">查询</button>
+				<li class="frist title" style="width:70px">产品类型</li>
+				<li class="input" style="width:125px"><input name="productType" style="width:120px"></li>
+				<li class="title" style="width:70px">产品大类</li>
+				<li class="input" style="width:125px"><input name="largeClassName" style="width:120px"></li>
+				<li class="input" style="width:50px"><button style="width:50px" type="button" searchType="unselect">查询</button>
 			</ul>
 		</div>
 		<div class="head">
 			<ul>
-				<li style="width:32px">
+				<li class="frist" style="width:32px">
 				    <input type="checkbox" class="checkbox-all" id="checkbox-all-unselect" />
-					<label for="checkbox-all-unselect"></label>
+					<!-- <label for="checkbox-all-unselect"></label> -->
 				</li>
 				<li>产品名称</li>
-				<li>融资对象</li>
-				<li>融资类型</li>
-				<li>其他要素</li>
+				<li>产品编码</li>
+				<li>产品类型</li>
+				<li>产品大类</li>
 			</ul>
 		</div>
 		<div class="body select-content">
 			<ul class="unselect-ul"></ul>
 		</div>
 	</div>
-</div>
-<input id="querySelectedURL" value="<%=request.getContextPath() %>/productBasicDetailVAction.do?method=listJsonBound"/>
-<input id="queryUnelectURL" value="<%=request.getContextPath() %>/productBasicDetailVAction.do?method=listJsonUnbound"/>
-<input id="addURL" value="<%=request.getContextPath() %>/productUnitPoolApp.do?method=createPool"/>
-<input id="delURL" value="<%=request.getContextPath() %>/productUnitPoolApp.do?method=deletePool"/>
-<input id="unitType" value="<%=request.getParameter("unitType")%>"/>
-<input id="unitId" value="<%=request.getParameter("unitId")%>"/>	
+</div>	
 
 <!--双向选择js-->
 <script src="js/index.js"></script>

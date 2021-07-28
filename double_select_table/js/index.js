@@ -31,15 +31,12 @@ $(function(){
 		//stopFunc(e);
 	});
 	
-	// 点击label时触发checkbox
-	$('.select-content').find('label').on('click',function(){
-		$(this).prev(".checkboxs").click();
-		changeBtnStatus();
-	});
-	
-	// 点击行时选择checkbox
-	$('.select-content').on('click','li',function(){
-		$(this).find("span").children('.checkboxs').click();
+	// 点击行时选择checkbox,
+	$('.select-content').on('click','li',function(e){
+		// 判断如果是点击的checkbox就不用再点一次了，不然点击失效
+		if(! $(e.target).is('.checkboxs')) {
+			$(this).find("span").children('.checkboxs').click();
+		}
 		changeBtnStatus();
 	});
 	
@@ -47,31 +44,29 @@ $(function(){
 	function changeBtnStatus(){
 		var left_btn = false
 		var right_btn = false
-        var btn1 =document.getElementsByClassName('right')[0]
-		var btn2 =document.getElementsByClassName('left')[1]
+        var btn1 =$("#rightBtn");
+		var btn2 =$("#leftBtn");
 		$(".unselect-ul").find(".checkboxs").each(function(){
-			//alert($(this).is(":checked"));
 			if($(this).is(":checked")) {
 				right_btn = true;
 			}
 			
 		});
 		$(".selected-ul").find(".checkboxs").each(function(){
-			//alert($(this).is(":checked"));
 			if($(this).is(":checked")) {
 				left_btn = true;
 			}
 		});
 		
 		if(left_btn){
-			btn1.classList.add('btn-cursor')
+			btn1.addClass('btn-cursor')
 		}else{
-			btn1.classList.remove('btn-cursor')
+			btn1.removeClass('btn-cursor')
 		}
 		if(right_btn){
-			btn2.classList.add('btn-cursor')
+			btn2.addClass('btn-cursor')
 		}else{
-			btn2.classList.remove('btn-cursor')
+			btn2.removeClass('btn-cursor')
 		}
 		
 	}
@@ -89,7 +84,7 @@ $(function(){
 		var idArray = new Array();
 		for(var i=0; i<checkboxs.length; i++){					
 			if($(checkboxs[i]).prop('checked')){
-				var id=$(checkboxs[i]).attr("id");
+				var id=$(checkboxs[i]).attr("keyId");
 				idArray.push(id);
 				var that = $(checkboxs[i]).parent().parent().clone();
 				that.children('input').prop('checked',false);
@@ -129,8 +124,7 @@ $(function(){
 		$(this).parents(".search").children().find("input").each(function(){
 			var name = $(this).attr("name");
 			var value = $(this).val();
-			//alert("name=" + name + ",value="+value)
-			log("name=" + name + ",value="+value);
+			//log("name=" + name + ",value="+value);
 			params[name] = value;
 		});
 		
@@ -140,6 +134,8 @@ $(function(){
 			refreshUnSelectList(params);
 		}
 		changeBtnStatus();
+		//log($(this).parents(".search").next(".head").html());
+		$(this).parents(".search").next(".head").find(".checkbox-all").prop("checked",false);
 	});
 	
 	/**初始化**/
@@ -150,79 +146,108 @@ $(function(){
 	
 	/**刷新已绑定列表 params查询参数json对象**/
 	function refreshSelectedList(params) {
-		// 已绑定
+// 已绑定
 		var selectedList = new Array();
 		for(var i=11; i<20; i++) {
 			var id = guid();
 			var data = {
-				"id"    : id,
-				"attr1" : "产品"+id,
-				"attr2" : "融资对象",
-				"attr3" : "融资类型",
-				"attr4" : "其他要素"
+				"poolAppId"    : id,
+				"productName" : "产品"+id,
+				"productCode" : "融资对象",
+				"productType" : "融资类型",
+				"largeClassName" : "其他要素"
 			};
 			selectedList.push(data);
 		}
+		
+		
 		var url = $("#querySelectedURL").val();
-		url += "?unitType="+$("#unitType").val()+"&unitId="+$("#unitId").val();
-		//unselectList = getData(url, params);			
-		generateList("selected-ul", selectedList);
+		url += "&unitType="+$("#unitType").val()+"&unitId="+$("#unitId").val();
+		//var selectedList = getData(url, params);	
+		$(".selected-ul").empty();
+		$.each(selectedList, function(i, data){
+			var cur_index = guid();
+			var checkbox = $("<input type='checkbox' class='checkboxs'>").attr("id", cur_index).attr("keyId", data.poolAppId);
+			//var label = $("<label>").attr("for",cur_index);
+			var checkCol = $("<span>").css({"width":"30px","border-left":"0px","text-align": "center"}).append(checkbox);//.append(label);
+			var newRow = $("<li>").append(checkCol);
+			
+			newRow.append($("<span>").text(data.productName));
+			newRow.append($("<span>").text(data.productCode));
+			newRow.append($("<span>").text(data.productType));
+			newRow.append($("<span>").text(data.largeClassName));			
+			$(".selected-ul").append(newRow);
+		});
 	}
 	
 	/**刷新未绑定列表 params查询参数json对象**/
 	function refreshUnSelectList(params) {
-		// 未绑定
+
 		var unselectList = new Array();
 		for(var i=11; i<20; i++) {
 			var id = guid();
 			var data = {
-				"id"    : id,
-				"attr1" : "产品"+id,
-				"attr2" : "融资对象",
-				"attr3" : "融资类型",
-				"attr4" : "其他要素"
+				"appId"    : id,
+				"productName" : "产品"+id,
+				"productCode" : "融资对象",
+				"productType" : "融资类型",
+				"largeClassName" : "其他要素"
 			};
 			unselectList.push(data);
 		}
-		var url = $("#queryUnelectURL").val();
-		url += "?unitType="+$("#unitType").val()+"&unitId="+$("#unitId").val();
-		//unselectList = getData(url, params);
-		generateList("unselect-ul", unselectList);
+		var url = $("#queryUnselectURL").val();
+		url += "&unitType="+$("#unitType").val()+"&unitId="+$("#unitId").val();
+		//var unselectList = getData(url, params);
+		$(".unselect-ul").empty();
+		$.each(unselectList, function(i, data){
+			var cur_index = guid();
+			var checkbox = $("<input type='checkbox' class='checkboxs'>").attr("id", cur_index).attr("keyId", data.appId);
+			//var label = $("<label>").attr("for",cur_index);
+			var checkCol = $("<span>").css({"width":"30px","border-left":"0px","text-align": "-webkit-center"}).append(checkbox);//.append(label);
+			var newRow = $("<li>").append(checkCol);
+			newRow.append($("<span>").text(data.productName));
+			newRow.append($("<span>").text(data.productCode));
+			newRow.append($("<span>").text(data.productType));
+			newRow.append($("<span>").text(data.largeClassName));			
+			$(".unselect-ul").append(newRow);
+		});
 	}
-	
 		
 	function save(ids, operType){
 		log("ids="+ids+",operType="+operType);
 		var url = "";
 		if("selected" === operType) {
-			url = $("#addURL").val();
+			url = $("#addURL").val() +  "&productAppIds="+ids+"&unitPoolType="+$("#unitType").val()+"&unitId="+$("#unitId").val();
 		} else {
-			url = $("#delURL").val();
+			url = $("#delURL").val() + "&Ids="+ids;
 		}
-		url += "?productAppIds="+ids+"&unitPoolType="+$("#unitType").val()+"&unitId="+$("#unitId").val();
 		log(url);
 		$.ajax({
 			url:url,
 			//params:params,
 			success:function(data){
-				dataList = JSON.parse(data);
+				log(data)
 			},
 			error:function() {
-				alert("加载数据出错，请重试！");
+				alert("保存数据出错，请重试！");
 			}
 		});
 	}
 	
 	/**请求后台数据 url 请求url，params查询参数json对象**/
 	function getData(url, params) {
-		var dataList = new Array();
 		log(url);
+		log(params);
+		var dataList = null;
 		$.ajax({
 			url:url,
-			params:params,
+			contentType:'application/json',
+			data:params,
+			async : false,//此处需要注意的是要想获取ajax返回的值这个async属性必须设置成同步的，否则获取不到返回值
 			success:function(data){
+				log(data);
 				dataList = JSON.parse(data);
-			},
+		    },
 			error:function() {
 				alert("加载数据出错，请重试！");
 			}
@@ -230,28 +255,6 @@ $(function(){
 		return dataList;
 	}
 	
-	/**生成列表，listClass 容器class，dataList 数据列表**/
-	function generateList(listClass, dataList) {
-		$("."+listClass).empty();
-		appendRow(listClass, dataList);
-	}
-	
-	/**追加内容，listClass 容器class，dataList 数据列表**/
-	function appendRow(listClass, dataList) {
-		$.each(dataList, function(i, data){
-			var cur_index = data.id;
-			var checkbox = $("<input type='checkbox' class='checkboxs'>").attr("id", cur_index);
-			var label = $("<label>").attr("for",cur_index);
-			var checkCol = $("<span>").css({"width":"30px"}).append(checkbox).append(label);
-			var newRow = $("<li>").append(checkCol);
-			newRow.append($("<span>").text(data.attr1));
-			newRow.append($("<span>").text(data.attr2));
-			newRow.append($("<span>").text(data.attr3));
-			newRow.append($("<span>").text(data.attr4));			
-			$("."+listClass).append(newRow);
-		});
-	}
-
 	/**
 	 *获取id
 	 */
@@ -261,7 +264,9 @@ $(function(){
 			return v.toString(16);
 		});
 	}
-	
+	/**
+	 * 打印日志 
+	 * */
 	function log(msg) {
 		if(console.log) {
 			console.log(msg);

@@ -1,44 +1,15 @@
 *{padding:0;margin:0;}
-	li{
-		list-style:none;
-		cursor:pointer;
-		position: relative;
-	}
+	li{ list-style:none; cursor:pointer; position: relative; }
 	/**选择窗口样式**/
-	.selection-container{
-		height:500px;
-		margin:10px;
-		/**overflow-y:scroll;
-		overflow-x:hidden;**/
-	}
+	.selection-container{ height:500px; margin-top:5px; }
 	/**box样式**/
-	.select-box{
-		width:45%;
-		height:100%;
-		float:left;
-	    border: 1px solid #B1CFE0;
-    	border-radius: 4px;
-	}
-	.arrows-box{
-		width:9%;
-		height:100%;
-		float:left;
-		position:relative;
-	}
-	/**行容器样式**/
-	/**.select-content{
-		width:100%;
-		height:100px;
-		overflow-y:scroll;
-		overflow-x:hidden;
-	}**/
-	
+	.select-box{ width:45%; height:100%; float:left; border: 1px solid #B1CFE0; border-radius: 4px; }
+	.arrows-box{ width:9.6%; height:100%; float:left; position:relative; }
 	/**标题样式**/
 	.select-box-title{
-		background: url(../images/arch_content/title_bg_r.jpg) no-repeat right;
 		display: block;
-		height: 37px;
-		line-height: 37px;
+		height: 30px;
+		line-height: 30px;
 		font-family: "宋体";
 		font-size: 12px;
 		font-weight: bold;
@@ -46,92 +17,19 @@
 		margin: 0;
 		box-sizing: border-box;
 	}
-	/*.checkbox-all{
-		float:left;
-	}*/
-	.select-box-title label:before {
-	    left: -14px!important;
-    	top: 4px!important;
-	}
-	.select-box-title label:after {
-	    left: -10px!important;
-		top: 5px!important;
-	}
-	.checkboxs{
-		vertical-align:middle;
-	}
-	
-	.unselect-ul{
-		/**padding:10px 0;**/
-	}
-	
-	.selected-ul{
-		/**padding:10px 0;**/
-	}
-	
+ 	.checkbox-all{ float:center; } 
+	.checkboxs { vertical-align: middle }
+
 	/**鼠标移过行时的颜色**/
-	.select-content li:hover{
-     background-color: #FFF277;
-	}
+	.select-content li:hover{ background-color: #FFF277; }
 	
 	.select-box  input[type='checkbox'] {
-    position: absolute;
+/*     position: absolute;
     left: 13px;
     top: 3px;
     width: 20px;
     height: 20px;
-    opacity: 0;
-	}
-	.select-box  label {
-		position: absolute;
-		left: 30px;
-		top: 9px;
-		height: 20px;
-		line-height: 20px;
-	}
-	.select-box span{
-		padding-left: 20px;
-	}
-	.select-box  label:before {
-		content: '';
-		position: absolute;
-		left: -14px;
-		top: -3px;
-		width: 12px;
-		height: 12px;
-		border: 1px solid #ddd;
-		border-radius: 5px;
-		transition: all 0.3s ease;
-		-webkit-transition: all 0.3s ease;
-		-moz-transition: all 0.3s ease;
-	}
-
-	.select-box label:after {
-			content: '';
-		position: absolute;
-		left: -10px;
-		top: -2px;
-		width: 4px;
-		height: 8px;
-		border: 0;
-		border-right: 1px solid #fff;
-		border-bottom: 1px solid #fff;
-		background: #fff;
-		transform: rotate(45deg);
-		-webkit-transform: rotate(45deg);
-		-moz-transform: rotate(45deg);
-		-ms-transform: rotate(45deg);
-		transition: all 0.3s ease;
-		-webkit-transition: all 0.3s ease;
-		-moz-transition: all 0.3s ease;
-	}
-
-	.select-box input[type='checkbox']:checked + label:before {
-		background: #00A0E8;
-		border-color: #00A0E8;
-	}
-	.select-box input[type='checkbox']:checked + label:after {
-		background: #00A0E8;
+    opacity: 0; */
 	}
 	.arrow-btns{
 		width:100%;
@@ -170,34 +68,28 @@
     	outline: none;
 		font-size: 30px;
 	}
-	.arrow-btn svg{
-		padding: 11px;
-		width:17px;
-		height:17px;
-		color: white;
-		fill:#C0C4CC;
-	}
+	.arrow-btn svg{ padding: 11px; width:17px; height:17px; color: white; fill:#C0C4CC; }
 	/**查询条件**/
-   .search {
-    overflow: hidden;width: 100%;_width: 100%;
-	font-family: "宋体";
-    font-size: 12px;
-   }
+   .search { overflow: hidden;width: 100%;_width: 100%; font-family: "宋体"; font-size: 12px;  }
    .search ul {
-    height: 34px;border-top: #B1CFE0 1px solid;;border-right: #B1CFE0 1px solid
+    height: 34px;border-top: #B1CFE0 1px solid;
    }
    .search ul li {
     float: left; width: 70px; line-height: 24px; height: 24px; text-align: center; font-size:12px;border-left: #B1CFE0 1px solid;overflow:hidden
    }
+   /**第一个不要左边框**/
+      .search ul li.frist{border-left:none;}
+      
    .search ul li.title {
     background:#DFE8F6;
-    padding: 5px;
+	padding: 5px;
+    width:50px;
    }
    .search ul li.input {
     background:#FFFFFF;
 	/**padding:0px 5px 0px 5px;**/
 	padding: 5px;
-	width:100px;
+	width:85px;
    }
    
 	/**模拟表格**/
@@ -209,11 +101,14 @@
     text-align: -internal-center;
    }
    .head ul {
-    background: #eee; height: 24px;border-bottom: #b1cfe0 1px solid;;border-top: #b1cfe0 1px solid;;border-right: #b1cfe0 1px solid
+    background: #eee; height: 24px;border-bottom: #b1cfe0 1px solid;;border-top: #b1cfe0 1px solid;
    }
    .head ul li {
     float: left; width: 100px; line-height: 24px; height: 24px; text-align: center; font-size:12px;border-left: #b1cfe0 1px solid; overflow:hidden
    }
+      /**第一个不要左边框**/
+   .head ul li.frist{border-left:none;}
+   
    .body {
     width: 100%;_width: 100%;
 	height:350px;
@@ -221,7 +116,12 @@
 	overflow-x:hidden;
    }
    .body ul li {
-    width:100%;background: #fff; overflow: hidden;border-bottom: #b1cfe0 1px solid;border-right: #b1cfe0 1px solid;float:left;
+    width:100%;background: #F9F9F9; overflow: hidden;border-bottom: #b1cfe0 1px solid;border-right: #b1cfe0 1px solid;float:left;
    }
-   .body ul li span { width:98px;_width:100px; font-size:12px; padding-left:2px; border-left: #b1cfe0 1px solid; float:left; height:27px; line-height:27px; overflow:hidden
+   .body ul li span { width:98px;_width:100px; font-size:12px; padding-left:2px; border-left: #b1cfe0 1px solid; float:left; height:23px; line-height:23px; overflow:hidden
    }
+	/**第一个不要左边框**/
+   .first{
+		border-left: none;
+	    text-align: -webkit-center;
+	} 
